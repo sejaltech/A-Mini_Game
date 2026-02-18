@@ -1,0 +1,165 @@
+Index · HTML
+Copy
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LABYRINTH — CSS Maze Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <section id="start-screen" class="screen active" aria-label="Start Screen">
+    <div class="scanlines"></div>
+    <div class="grid-bg"></div>
+
+    <div class="start-content">
+      <div class="logo-wrap">
+        <div class="logo-glitch" data-text="LABYRINTH">Animated Maze Game</div>
+        <p class="logo-sub">— Play The Game —</p>
+      </div>
+
+      <div class="start-info">
+        <div class="info-card">
+          <span class="info-icon">⬆⬇⬅➡</span>
+          <span>Arrow keys or WASD to move</span>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">⚡</span>
+          <span>Reach the goal before time runs out</span>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">★</span>
+          <span>Fewer moves = higher score</span>
+        </div>
+      </div>
+
+      <div class="difficulty-select">
+        <p class="select-label">SELECT DIFFICULTY</p>
+        <div class="diff-buttons" role="radiogroup" aria-label="Difficulty">
+          <button class="diff-btn active" data-level="easy" aria-pressed="true">EASY</button>
+          <button class="diff-btn" data-level="medium" aria-pressed="false">MEDIUM</button>
+          <button class="diff-btn" data-level="hard" aria-pressed="false">HARD</button>
+        </div>
+      </div>
+
+      <button id="start-btn" class="cta-btn" aria-label="Start Game">
+        <span class="cta-text">ENTER THE MAZE</span>
+        <span class="cta-arrow">→</span>
+      </button>
+    </div>
+
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+  </section>
+
+  <section id="game-screen" class="screen" aria-label="Game Screen">
+    <div class="scanlines"></div>
+
+
+    <header class="hud" role="banner">
+      <div class="hud-block hud-score">
+        <span class="hud-label">SCORE</span>
+        <span class="hud-value" id="score-display">0</span>
+      </div>
+
+      <div class="hud-block hud-center">
+        <div class="progress-wrap" role="timer" aria-label="Time remaining">
+          <div class="progress-bar-bg">
+            <div id="progress-bar" class="progress-bar-fill"></div>
+          </div>
+          <span class="hud-timer" id="timer-display">60</span>
+        </div>
+      </div>
+
+      <div class="hud-block hud-moves">
+        <span class="hud-label">MOVES</span>
+        <span class="hud-value" id="moves-display">0</span>
+      </div>
+    </header>
+
+
+    <main class="game-area" role="main">
+      <div class="maze-container" id="maze-container" role="grid" aria-label="Maze">
+ 
+      </div>
+    </main>
+
+    <footer class="game-footer">
+      <div class="key-hints" aria-label="Keyboard controls">
+        <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>
+        <span class="key-sep">or</span>
+        <kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd>
+      </div>
+      <button id="pause-btn" class="pause-btn" aria-label="Pause Game">⏸ PAUSE</button>
+    </footer>
+
+    <div id="pause-overlay" class="pause-overlay hidden" role="dialog" aria-label="Game Paused">
+      <div class="pause-box">
+        <p class="pause-title">PAUSED</p>
+        <button id="resume-btn" class="cta-btn small">RESUME</button>
+        <button id="quit-btn" class="cta-btn small ghost">QUIT</button>
+      </div>
+    </div>
+  </section>
+
+ 
+  <section id="gameover-screen" class="screen" aria-label="Game Over Screen">
+    <div class="scanlines"></div>
+    <div class="grid-bg"></div>
+
+    <div class="gameover-content">
+      <div class="result-badge" id="result-badge">
+        <span class="result-icon" id="result-icon">✓</span>
+      </div>
+
+      <h2 class="result-title" id="result-title">ESCAPED!</h2>
+      <p class="result-sub" id="result-sub">You conquered the labyrinth.</p>
+
+      <div class="scoreboard" role="table" aria-label="Final Scores">
+        <div class="score-row" role="row">
+          <span class="score-key" role="cell">FINAL SCORE</span>
+          <span class="score-val" id="final-score" role="cell">0</span>
+        </div>
+        <div class="score-row" role="row">
+          <span class="score-key" role="cell">TIME TAKEN</span>
+          <span class="score-val" id="final-time" role="cell">0s</span>
+        </div>
+        <div class="score-row" role="row">
+          <span class="score-key" role="cell">TOTAL MOVES</span>
+          <span class="score-val" id="final-moves" role="cell">0</span>
+        </div>
+        <div class="score-row highlight" role="row">
+          <span class="score-key" role="cell">RATING</span>
+          <span class="score-val" id="final-rating" role="cell">★★★</span>
+        </div>
+      </div>
+
+ 
+      <div class="highscore-wrap">
+        <span class="hs-label">BEST SCORE</span>
+        <span class="hs-value" id="high-score-display">0</span>
+      </div>
+
+      <div class="gameover-actions">
+        <button id="replay-btn" class="cta-btn">PLAY AGAIN</button>
+        <button id="menu-btn" class="cta-btn ghost">MAIN MENU</button>
+      </div>
+    </div>
+
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
